@@ -3,7 +3,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- *  this class models a queue of Persons
+ * this class models a queue of Persons
  *
  * @author Ali ArjomandBigdeli
  * @since 3.17.2018
@@ -117,14 +117,10 @@ public class SimplePersonQueue extends PersonQueue {
      * @return {@code true} (as specified by {@link Collection#add})
      */
     @Override
-    public boolean add(Person person) {
+    public boolean add(Person person) { //because I use ArrayList, no need to check capacity
         //WRITE YOUR OWN IMPLEMENTATION
-        if (size() < Integer.MAX_VALUE) {
-            qArrList.add(person);
-            return true;
-        } else {
-            throw new IllegalStateException("Can't exceed Integer MAX_VALUE");
-        }
+        qArrList.add(person);
+        return true;
     }
 
     /**
