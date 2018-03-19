@@ -76,6 +76,16 @@ public class Matrix {
         }
     }
 
+    public Matrix constMul(double b) {
+        Matrix c = new Matrix(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                c.getMat()[i][j] = mat[i][j] * b;
+            }
+        }
+        return c;
+    }
+
 
     public void userDefine() {
         int lineCount = 0;
