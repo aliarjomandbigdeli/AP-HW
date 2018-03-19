@@ -1,66 +1,41 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Run {
     public static void main(String[] args) {
         System.out.println("Run..");
 
-        //ArrayList<String> words = new ArrayList<String>();
-        ArrayList<ArrayList<Double>> mat = new ArrayList<ArrayList<Double>>();
 
-        int lineCount = 0;
+        System.out.println("Define the first matrix (X):");
 
+        Matrix X = new Matrix();
+        X.getValues();
+        X.showMat();
+        System.out.println("Define the second matrix (Y):");
+        Matrix Y = new Matrix();
+        Y.getValues();
+        Y.showMat();
 
-        Scanner inputStream = new Scanner(System.in);
-        String line = inputStream.nextLine();
-
-        while (true) {
-            if (lineCount > 0)
-                line = inputStream.nextLine();
-            if (line.length() == 0)
-                break;
-
-            int indexOfComma = 0;
-            int nextIndexOfComma = 0;
-
-            ArrayList<Double> row = new ArrayList<>();
-            mat.add(row);
-
-            for (int i = 0; i < line.length(); i++) {
-                if (line.charAt(i) == ',') {
-                    nextIndexOfComma = i;
-                    String number = "";
-                    if (indexOfComma == 0)
-                        number = line.substring(indexOfComma, nextIndexOfComma);
-                    else
-                        number = line.substring(indexOfComma + 1, nextIndexOfComma);
-
-                    mat.get(lineCount).add(Double.parseDouble(number));
-                }
-                indexOfComma = nextIndexOfComma;
-            }
-
-            int lastIndexOfComma = line.lastIndexOf(",");
-            String lastNumber = line.substring(lastIndexOfComma + 1);
-            mat.get(lineCount).add(Double.parseDouble(lastNumber));
-
-            ++lineCount;
-        }
-
-
-
-
-        for (int i = 0; i < mat.size(); i++) {
-            for (int j = 0; j < mat.get(i).size(); j++) {
-                System.out.print(mat.get(i).get(j) + ", ");
-            }
-            System.out.println();
-        }
+        System.out.println("Result:");
+        X.add(Y).showMat();
+        System.out.println("Result:");
+        X.sub(Y).showMat();
 
 
         String number = "-10";
         int result = Integer.parseInt(number);
         System.out.println(result);
 
+
+        Scanner inputStream = new Scanner(System.in);
+        int dim = inputStream.nextInt();
+        int[][] arr2d = new int[dim][];
+        arr2d[0] =new int[3];
+        arr2d[0][1]=9;
+        System.out.println(arr2d[0][1]);
+
+
     }
+
+
+
 }
