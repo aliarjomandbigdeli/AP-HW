@@ -9,16 +9,16 @@ public class Run {
 
         Matrix X = new Matrix();
         X.userDefine();
-        X.showMat();
         System.out.println("Define the second matrix (Y):");
         Matrix Y = new Matrix();
         Y.userDefine();
-        Y.showMat();
 
         System.out.println("Result:");
         X.add(Y).showMat();
         System.out.println("Result:");
         X.sub(Y).showMat();
+        System.out.println("Result:");
+        X.mul(Y).showMat();
 
 
 //        String number = "-10";

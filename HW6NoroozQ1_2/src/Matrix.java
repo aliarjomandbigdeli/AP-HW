@@ -32,7 +32,7 @@ public class Matrix {
     }
 
     public Matrix add(Matrix b) {
-        if (cols == b.rows) {
+        if (rows == b.rows && cols == b.cols) {
             Matrix c = new Matrix(rows, b.getCols());
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < b.getCols(); j++) {
@@ -46,11 +46,28 @@ public class Matrix {
     }
 
     public Matrix sub(Matrix b) {
-        if (cols == b.rows) {
+        if (rows == b.rows && cols == b.cols) {
             Matrix c = new Matrix(rows, b.getCols());
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < b.getCols(); j++) {
                     c.getMat()[i][j] = mat[i][j] - b.getMat()[i][j];
+                }
+            }
+            return c;
+        } else {
+            throw new RuntimeException("Dimensions don't match");
+        }
+    }
+
+    public Matrix mul(Matrix b) {
+        if (cols == b.rows) {
+            Matrix c = new Matrix(rows, b.getCols());
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < b.getCols(); j++) {
+                    for (int k = 0; k < cols; k++) {
+                        c.getMat()[i][j] += mat[i][k] * b.getMat()[k][j];
+                    }
+
                 }
             }
             return c;
@@ -122,7 +139,10 @@ public class Matrix {
     public void showMat() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                System.out.print(mat[i][j] + ", ");
+                if (j == cols - 1)
+                    System.out.print(mat[i][j]);
+                else
+                    System.out.print(mat[i][j] + ", ");
             }
             System.out.println();
         }
