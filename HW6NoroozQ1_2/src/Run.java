@@ -35,11 +35,10 @@ public class Run {
         double secondCoefficient = 0;
 
 
-
         indexOfX = line.lastIndexOf("X");
-        System.out.println("indexOfX: " + indexOfX);
+        //System.out.println("indexOfX: " + indexOfX);
         indexOfY = line.lastIndexOf("Y");
-        System.out.println("indexOfY: " + indexOfY);
+        //System.out.println("indexOfY: " + indexOfY);
         int minIndex = indexOfX < indexOfY ? indexOfX : indexOfY;
         int maxIndex = indexOfX > indexOfY ? indexOfX : indexOfY;
 
@@ -52,11 +51,26 @@ public class Run {
             } else if (operatorStr.contains("+")) {
                 indexOfOperator = line.lastIndexOf("+");
                 operator = line.charAt(indexOfOperator);
-            } else if (operatorStr.contains("-")) {
+            } else if (operatorStr.contains("-") && !operatorStr.contains("(")) {
                 indexOfOperator = line.lastIndexOf("-");
                 operator = line.charAt(indexOfOperator);
+            } else if (operatorStr.contains("(")) {
+                int indexOfParentheses = operatorStr.lastIndexOf('(');
+                operatorStr = operatorStr.substring(0, indexOfParentheses);
+                if (operatorStr.contains("*")) {
+                    indexOfOperator = operatorStr.lastIndexOf("*") + minIndex;
+                    operator = line.charAt(indexOfOperator);
+                } else if (operatorStr.contains("+")) {
+                    indexOfOperator = operatorStr.lastIndexOf("+") + minIndex;
+                    operator = line.charAt(indexOfOperator);
+                } else if (operatorStr.contains("-")) {
+                    indexOfOperator = operatorStr.lastIndexOf("-") + minIndex;
+                    operator = line.charAt(indexOfOperator);
+                }
+            } else {
+                System.err.println("Incorrect expression");
             }
-            System.out.println("operator: " + operator);
+            //System.out.println("operator: " + operator);
         }
 
 
@@ -77,13 +91,12 @@ public class Run {
             } else if (line.charAt(line.length() - 1) == 'Y') {
                 System.out.println("Result:");
                 Y.constMul(firstCoefficient).showMat();
-            } else{
+            } else {
                 System.err.println("Incorrect expression");
             }
         } else {
             String number = "";
             if (line.charAt(0) == '(' && line.charAt(minIndex - 1) == ')') {
-                //System.out.println("Hello");
                 number = line.substring(1, minIndex - 1);
                 firstCoefficient = Double.parseDouble(number);
 
@@ -92,18 +105,23 @@ public class Run {
                 firstCoefficient = Double.parseDouble(number);
             }
 
-            //work on bones mark
             String number2 = "";
             if (line.charAt(indexOfOperator + 1) == '(' && line.charAt(maxIndex - 1) == ')') {
-                //System.out.println("Hello");
                 number2 = line.substring(indexOfOperator + 2, maxIndex - 1);
                 secondCoefficient = Double.parseDouble(number2);
 
             } else {
                 number2 = line.substring(indexOfOperator + 1, maxIndex);
+                for (int i = 0; i < number2.length(); i++) {
+                    if (number2.charAt(i) != ' ') {
+                        number2 = number2.substring(i);
+                        break;
+                    }
+                }
                 secondCoefficient = Double.parseDouble(number2);
             }
 
+            System.out.println("Result:");
             if (indexOfX < indexOfY) {
                 if (operator == '+') {
                     X.constMul(firstCoefficient).add(Y.constMul(secondCoefficient)).showMat();
@@ -124,13 +142,6 @@ public class Run {
 
         }
 
-
-        //matList.get(lineCount).add(Double.parseDouble(lastNumber));
-
-
-//        String number = "-10";
-//        int result = Integer.parseInt(number);
-//        System.out.println(result);
 
 
     }
