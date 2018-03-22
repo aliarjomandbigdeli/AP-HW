@@ -77,6 +77,8 @@ public class Run {
             } else if (line.charAt(line.length() - 1) == 'Y') {
                 System.out.println("Result:");
                 Y.constMul(firstCoefficient).showMat();
+            } else{
+                System.err.println("Incorrect expression");
             }
         } else {
             String number = "";
