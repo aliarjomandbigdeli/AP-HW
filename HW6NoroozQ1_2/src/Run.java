@@ -1,5 +1,11 @@
 import java.util.Scanner;
 
+/**
+ * this class is for running code that get two matrices and an expression of them and show the result
+ *
+ * @author Ali ArjomandBigdeli
+ * @since 3.22.2018
+ */
 public class Run {
     public static void main(String[] args) {
         System.out.println("Run..");
@@ -18,6 +24,9 @@ public class Run {
         Scanner inputStream = new Scanner(System.in);
         String line = inputStream.nextLine();
 
+        if(!line.contains("X") && !line.contains("Y")){
+            throw new RuntimeException("incorrect variable");
+        }
 
         int indexOfOperator = -1;
         int indexOfX = -1;
@@ -104,12 +113,7 @@ public class Run {
 
             } else {
                 number2 = line.substring(indexOfOperator + 1, maxIndex);
-                for (int i = 0; i < number2.length(); i++) {
-                    if (number2.charAt(i) != ' ') {
-                        number2 = number2.substring(i);
-                        break;
-                    }
-                }
+                number2=number2.replace(" ","");
                 secondCoefficient = Double.parseDouble(number2);
             }
 
