@@ -13,14 +13,6 @@ public class Run {
         Matrix Y = new Matrix();
         Y.userDefine();
 
-//        System.out.println("Result:");
-//        X.add(Y).showMat();
-//        System.out.println("Result:");
-//        X.sub(Y).showMat();
-//        System.out.println("Result:");
-//        X.mul(Y).showMat();
-//        System.out.println("Result:");
-//        X.constMul(4).showMat();
 
         System.out.println("Enter your polynomial expression:");
         Scanner inputStream = new Scanner(System.in);
