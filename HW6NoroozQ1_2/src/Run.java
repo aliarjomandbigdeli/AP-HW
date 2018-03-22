@@ -60,7 +60,7 @@ public class Run {
                     operator = line.charAt(indexOfOperator);
                 }
             } else {
-                System.err.println("Incorrect expression");
+                System.err.println("Incorrect expression(operator)");
             }
             //System.out.println("operator: " + operator);
         }
@@ -113,6 +113,10 @@ public class Run {
                 secondCoefficient = Double.parseDouble(number2);
             }
 
+            if (line.charAt(minIndex) == line.charAt(maxIndex)) {
+                throw new RuntimeException("Duplicate variable");
+            }
+
             System.out.println("Result:");
             if (indexOfX < indexOfY) {
                 if (operator == '+') {
@@ -133,7 +137,6 @@ public class Run {
             }
 
         }
-
 
 
     }

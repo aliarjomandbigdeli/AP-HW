@@ -108,6 +108,9 @@ public class Matrix {
 
             for (int i = 0; i < line.length(); i++) {
                 if (line.charAt(i) == ',') {
+                    if (line.charAt(i + 1) == ','){
+                        throw new RuntimeException("Additional comma");
+                    }
                     nextIndexOfComma = i;
                     String number = "";
                     if (indexOfComma == 0)
