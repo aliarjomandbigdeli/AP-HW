@@ -8,8 +8,6 @@ import java.util.Scanner;
  */
 public class Run {
     public static void main(String[] args) {
-        System.out.println("Run..");
-
 
         System.out.println("Define the first matrix (X):");
         Matrix X = new Matrix();
@@ -17,7 +15,6 @@ public class Run {
         System.out.println("Define the second matrix (Y):");
         Matrix Y = new Matrix();
         Y.userDefine();
-
 
         System.out.println("Enter your polynomial expression:");
         Scanner inputStream = new Scanner(System.in);
@@ -38,12 +35,8 @@ public class Run {
         line = line.replace(")", "");
         line = line.replace(" ", "");
 
-        System.out.println(line);
-
         indexOfX = line.lastIndexOf("X");
-        //System.out.println("indexOfX: " + indexOfX);
         indexOfY = line.lastIndexOf("Y");
-        //System.out.println("indexOfY: " + indexOfY);
         int minIndex = indexOfX < indexOfY ? indexOfX : indexOfY;
         int maxIndex = indexOfX > indexOfY ? indexOfX : indexOfY;
 
@@ -59,15 +52,12 @@ public class Run {
         }
 
         if (indexOfX != -1 && indexOfY != -1) {
-            String operatorStr = "";
-            operatorStr = line.substring(minIndex, maxIndex);
             operator = line.charAt(minIndex + 1);
             if (operator != '*' && operator != '+' && operator != '-') {
                 System.err.println("Incorrect expression(operator)");
                 throw new RuntimeException("Incorrect expression(operator)");
             }
             indexOfOperator = minIndex + 1;
-            //System.out.println("operator: " + operator);
         }
 
 
@@ -82,8 +72,6 @@ public class Run {
             } else if (line.charAt(line.length() - 1) == 'Y') {
                 System.out.println("Result:");
                 Y.constMul(firstCoefficient).showMat();
-            } else {
-                System.err.println("Incorrect expression");
             }
         } else {
             String number = "";
