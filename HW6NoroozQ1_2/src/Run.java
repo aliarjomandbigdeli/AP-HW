@@ -12,7 +12,6 @@ public class Run {
 
 
         System.out.println("Define the first matrix (X):");
-
         Matrix X = new Matrix();
         X.userDefine();
         System.out.println("Define the second matrix (Y):");
@@ -24,7 +23,7 @@ public class Run {
         Scanner inputStream = new Scanner(System.in);
         String line = inputStream.nextLine();
 
-        if(!line.contains("X") && !line.contains("Y")){
+        if (!line.contains("X") && !line.contains("Y")) {
             throw new RuntimeException("incorrect variable");
         }
 
@@ -35,6 +34,11 @@ public class Run {
         double firstCoefficient = 0;
         double secondCoefficient = 0;
 
+        line = line.replace("(", "");
+        line = line.replace(")", "");
+        line = line.replace(" ", "");
+
+        System.out.println(line);
 
         indexOfX = line.lastIndexOf("X");
         //System.out.println("indexOfX: " + indexOfX);
@@ -43,48 +47,34 @@ public class Run {
         int minIndex = indexOfX < indexOfY ? indexOfX : indexOfY;
         int maxIndex = indexOfX > indexOfY ? indexOfX : indexOfY;
 
+        if (line.contains("X")) {
+            String line2 = line.replace("X", "");
+            if (line.length() - line2.length() == 2)
+                throw new RuntimeException("Duplicate variable");
+        }
+        if (line.contains("Y")) {
+            String line2 = line.replace("Y", "");
+            if (line.length() - line2.length() == 2)
+                throw new RuntimeException("Duplicate variable");
+        }
+
         if (indexOfX != -1 && indexOfY != -1) {
             String operatorStr = "";
             operatorStr = line.substring(minIndex, maxIndex);
-            if (operatorStr.contains("*")) {
-                indexOfOperator = line.lastIndexOf("*");
-                operator = line.charAt(indexOfOperator);
-            } else if (operatorStr.contains("+")) {
-                indexOfOperator = line.lastIndexOf("+");
-                operator = line.charAt(indexOfOperator);
-            } else if (operatorStr.contains("-") && !operatorStr.contains("(")) {
-                indexOfOperator = line.lastIndexOf("-");
-                operator = line.charAt(indexOfOperator);
-            } else if (operatorStr.contains("(")) {
-                int indexOfParentheses = operatorStr.lastIndexOf('(');
-                operatorStr = operatorStr.substring(0, indexOfParentheses);
-                if (operatorStr.contains("*")) {
-                    indexOfOperator = operatorStr.lastIndexOf("*") + minIndex;
-                    operator = line.charAt(indexOfOperator);
-                } else if (operatorStr.contains("+")) {
-                    indexOfOperator = operatorStr.lastIndexOf("+") + minIndex;
-                    operator = line.charAt(indexOfOperator);
-                } else if (operatorStr.contains("-")) {
-                    indexOfOperator = operatorStr.lastIndexOf("-") + minIndex;
-                    operator = line.charAt(indexOfOperator);
-                }
-            } else {
+            operator = line.charAt(minIndex + 1);
+            if (operator != '*' && operator != '+' && operator != '-') {
                 System.err.println("Incorrect expression(operator)");
+                throw new RuntimeException("Incorrect expression(operator)");
             }
+            indexOfOperator = minIndex + 1;
             //System.out.println("operator: " + operator);
         }
 
 
         if (indexOfOperator == -1) {
             String number = "";
-            if (line.charAt(0) == '(' && line.charAt(line.length() - 2) == ')') {
-                number = line.substring(1, line.length() - 2);
-                firstCoefficient = Double.parseDouble(number);
-
-            } else {
-                number = line.substring(0, line.length() - 1);
-                firstCoefficient = Double.parseDouble(number);
-            }
+            number = line.substring(0, line.length() - 1);
+            firstCoefficient = Double.parseDouble(number);
 
             if (line.charAt(line.length() - 1) == 'X') {
                 System.out.println("Result:");
@@ -97,29 +87,12 @@ public class Run {
             }
         } else {
             String number = "";
-            if (line.charAt(0) == '(' && line.charAt(minIndex - 1) == ')') {
-                number = line.substring(1, minIndex - 1);
-                firstCoefficient = Double.parseDouble(number);
-
-            } else {
-                number = line.substring(0, minIndex);
-                firstCoefficient = Double.parseDouble(number);
-            }
+            number = line.substring(0, minIndex);
+            firstCoefficient = Double.parseDouble(number);
 
             String number2 = "";
-            if (line.charAt(indexOfOperator + 1) == '(' && line.charAt(maxIndex - 1) == ')') {
-                number2 = line.substring(indexOfOperator + 2, maxIndex - 1);
-                secondCoefficient = Double.parseDouble(number2);
-
-            } else {
-                number2 = line.substring(indexOfOperator + 1, maxIndex);
-                number2=number2.replace(" ","");
-                secondCoefficient = Double.parseDouble(number2);
-            }
-
-            if (line.charAt(minIndex) == line.charAt(maxIndex)) {
-                throw new RuntimeException("Duplicate variable");
-            }
+            number2 = line.substring(indexOfOperator + 1, maxIndex);
+            secondCoefficient = Double.parseDouble(number2);
 
             System.out.println("Result:");
             if (indexOfX < indexOfY) {
