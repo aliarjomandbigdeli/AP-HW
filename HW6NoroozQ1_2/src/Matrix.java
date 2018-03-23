@@ -39,7 +39,7 @@ public class Matrix {
      *
      * @return mat 2DArray
      */
-    public double[][] getMat() {
+    private double[][] getMat() {
         return mat;
     }
 
@@ -57,7 +57,7 @@ public class Matrix {
      *
      * @return cols, number of columns
      */
-    public int getCols() {
+    private int getCols() {
         return cols;
     }
 
