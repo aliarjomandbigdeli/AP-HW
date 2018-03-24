@@ -64,6 +64,9 @@ public class Run {
         if (indexOfOperator == -1) {
             String number = "";
             number = line.substring(0, line.length() - 1);
+            if (!isNumeric(number)) {
+                throw new RuntimeException("incorrect number");
+            }
             firstCoefficient = Double.parseDouble(number);
 
             if (line.charAt(line.length() - 1) == 'X') {
@@ -76,10 +79,16 @@ public class Run {
         } else {
             String number = "";
             number = line.substring(0, minIndex);
+            if (!isNumeric(number)) {
+                throw new RuntimeException("incorrect number");
+            }
             firstCoefficient = Double.parseDouble(number);
 
             String number2 = "";
             number2 = line.substring(indexOfOperator + 1, maxIndex);
+            if (!isNumeric(number2)) {
+                throw new RuntimeException("incorrect number");
+            }
             secondCoefficient = Double.parseDouble(number2);
 
             System.out.println("Result:");
@@ -104,6 +113,11 @@ public class Run {
         }
 
 
+    }
+
+
+    private static boolean isNumeric(String s) {
+        return s != null && s.matches("[-+]?\\d*\\.?\\d+");
     }
 
 
