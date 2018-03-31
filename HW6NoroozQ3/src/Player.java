@@ -107,7 +107,7 @@ public abstract class Player {
                 case 8:
                     if (numberOfAnimals[8] < 5) {
                         numberOfAnimals[8]++;
-                        Animal animal = new Hipppopotamus();
+                        Animal animal = new Hippopotamus();
                         animals.add(animal);
                     }
                     break;
@@ -148,38 +148,90 @@ public abstract class Player {
 
     public void showAllCards() {
 
-        System.out.println("#########################################" +
+        int max = animals.size() > opponent.animals.size() ? animals.size() : opponent.animals.size();
+        System.out.println("#################################################################" +
                 "\t\t\t\t\t\t\t" + "#########################################");
-        System.out.println("############## Your cards ###############" +
+        System.out.println("########################## Your cards ###########################" +
                 "\t\t\t\t\t\t\t" + "############ Opponent cards #############");
-        System.out.println("#########################################" +
+        System.out.println("#################################################################" +
                 "\t\t\t\t\t\t\t" + "#########################################");
-        for (int i = 0; i < animals.size(); i++) {
-            if (animals.get(i).isAlive()) {
-                System.out.println((i + 1) + ": " +
-                        animals.get(i).getClass().getSimpleName() +
+        for (int i = 0; i < max; i++) {
+            System.out.print((i + 1) + ": ");
+            if (i < animals.size()) {
+                System.out.print(animals.get(i).getClass().getSimpleName() +
                         "{energy=" + animals.get(i).energy +
                         ", life=" + animals.get(i).life +
-                        '}' + "\t\t\t\t\t\t\t\t\t\t" + opponent.animals.get(i).getClass().getSimpleName() +
+                        ", " + animals.get(i).attackTags[0] +
+                        " Power1=" + animals.get(i).attackValue[0]);
+                if (animals.get(i).attackValue[1] != 0) {
+                    System.out.print(", " + animals.get(i).attackTags[1] +
+                            " Power2=" + animals.get(i).attackValue[1]);
+                }
+                System.out.print('}');
+            } else {
+                System.out.print("                                                                 ");
+            }
+            if (i < opponent.animals.size()) {
+                if (i < animals.size() && animals.get(i).attackValue[1] != 0)
+                    System.out.print("\t\t\t\t\t\t\t");
+                else
+                    System.out.print("\t\t\t\t\t\t\t\t\t\t");
+
+                System.out.print(opponent.animals.get(i).getClass().getSimpleName() +
                         "{energy=" + opponent.animals.get(i).energy +
                         ", life=" + opponent.animals.get(i).life + '}');
-            } else {
-                System.out.println(getClass().getSimpleName() +
-                        "{is dead}");
             }
+            System.out.println();
         }
     }
 
     public abstract void chooseCards();
 
-    public boolean attack(int myAnimal, int opponentAnimal) {
-        if (animals.get(myAnimal).attack(opponent.animals.get(opponentAnimal))) {
+    public abstract void turn();
+
+    public boolean attack(int myAnimal, int opponentAnimal, int attackType) {
+        if (animals.get(myAnimal).attack(opponent.animals.get(opponentAnimal), attackType)) {
             if (!opponent.animals.get(opponentAnimal).isAlive()) {
                 opponent.animals.remove(opponentAnimal);
             }
             return true;
-        }else
+        } else
             return false;
+    }
+
+
+    public boolean groupAttack(int opponentAnimal, ArrayList<Integer> animalsIndex, int[] attackTypes) {
+        int sumOfAttack = 0;
+        ArrayList<Animal> animalArrayList = new ArrayList<>();
+        for (int i = 0; i < animalsIndex.size(); i++) {
+            animalArrayList.add(animals.get(animalsIndex.get(i)));
+        }
+        for (int i = 0; i < animalArrayList.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (!animalArrayList.get(i).attackTags[0].equals(animalArrayList.get(j).attackTags[0])) {
+                    System.err.println("Can't group attack(tags)");
+                    return false;
+                }
+            }
+            sumOfAttack += animalArrayList.get(i).attackValue[attackTypes[i]];
+        }
+
+        for (int i = 0; i < animalArrayList.size(); i++) {
+            if (animalArrayList.get(i).energy - (sumOfAttack / animalArrayList.size()) < 0) {
+                System.err.println("Can't group attack(energy)");
+                return false;
+            }
+        }
+
+        for (int i = 0; i < animalArrayList.size(); i++) {
+            animalArrayList.get(i).energy -= (sumOfAttack / animalArrayList.size());
+        }
+        opponent.animals.get(opponentAnimal).life -= sumOfAttack;
+        if (opponent.animals.get(opponentAnimal).life < 0) {
+            opponent.animals.get(opponentAnimal).alive = false;
+            opponent.animals.remove(opponentAnimal);
+        }
+        return true;
     }
 
     public boolean isWinner() {
