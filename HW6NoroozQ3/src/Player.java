@@ -150,11 +150,11 @@ public abstract class Player {
 
         int max = animals.size() > opponent.animals.size() ? animals.size() : opponent.animals.size();
         System.out.println("#################################################################" +
-                "\t\t\t\t\t\t\t" + "#########################################");
+                "\t\t\t\t\t\t\t" + "#################################################################");
         System.out.println("########################## Your cards ###########################" +
-                "\t\t\t\t\t\t\t" + "############ Opponent cards #############");
+                "\t\t\t\t\t\t\t" + "######################## Opponent cards #########################");
         System.out.println("#################################################################" +
-                "\t\t\t\t\t\t\t" + "#########################################");
+                "\t\t\t\t\t\t\t" + "#################################################################");
         for (int i = 0; i < max; i++) {
             System.out.print((i + 1) + ": ");
             if (i < animals.size()) {
@@ -179,7 +179,14 @@ public abstract class Player {
 
                 System.out.print(opponent.animals.get(i).getClass().getSimpleName() +
                         "{energy=" + opponent.animals.get(i).energy +
-                        ", life=" + opponent.animals.get(i).life + '}');
+                        ", life=" + opponent.animals.get(i).life +
+                        ", " + opponent.animals.get(i).attackTags[0] +
+                        " Power1=" + opponent.animals.get(i).attackValue[0]);
+                if (opponent.animals.get(i).attackValue[1] != 0) {
+                    System.out.print(", " + opponent.animals.get(i).attackTags[1] +
+                            " Power2=" + opponent.animals.get(i).attackValue[1]);
+                }
+                System.out.print('}');
             }
             System.out.println();
         }
@@ -227,7 +234,7 @@ public abstract class Player {
             animalArrayList.get(i).energy -= (sumOfAttack / animalArrayList.size());
         }
         opponent.animals.get(opponentAnimal).life -= sumOfAttack;
-        if (opponent.animals.get(opponentAnimal).life < 0) {
+        if (opponent.animals.get(opponentAnimal).life <= 0) {
             opponent.animals.get(opponentAnimal).alive = false;
             opponent.animals.remove(opponentAnimal);
         }

@@ -39,7 +39,7 @@ public abstract class Animal {
         if (energy - attackValue[attackType] >= 0) {
             animal.life -= attackValue[attackType];
             energy -= attackValue[attackType];
-            if (animal.life < 0) {
+            if (animal.life <= 0) {
                 animal.alive = false;
             }
             return true;

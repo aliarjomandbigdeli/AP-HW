@@ -44,10 +44,6 @@ public class AnimalCardGame {
         playerB.chooseCards();
         playerB.showCards();
 
-//        System.out.println("show All cards: ");
-//        playerA.showAllCards();
-
-
         while (true) {
             if (ifTurnProcessEndGame(playerA))
                 break;
@@ -84,99 +80,6 @@ public class AnimalCardGame {
     private boolean ifTurnProcessEndGame(Player player) {
         player.showAllCards();
         player.turn();
-//        Scanner inputStream = new Scanner(System.in);
-//        System.out.println(player.getId() + "'s turn");
-//        System.out.println("Do want to attack or recovery?(a/r)");
-//        String ans = inputStream.next();
-//        while (!ans.equals("a") && !ans.equals("r")) {
-//            System.out.println("Please enter again, do want to attack or recovery?(a/r)");
-//            ans = inputStream.next();
-//        }
-//        if (ans.equals("a")) {
-//            System.out.println("Please choose your animal: ");
-//            int myAnimal = inputStream.nextInt();
-//            System.out.println("Please choose the animal you want to attack to: ");
-//            int opponentAnimal = inputStream.nextInt();
-//            int attackType = 0;
-//            if (player.animals.get(myAnimal - 1).attackValue[1] != 0) {
-//                System.out.println("Please choose type of your attack(1/2): ");
-//                attackType = inputStream.nextInt();
-//                attackType--;
-//            }
-//
-////            System.out.println("Group Attack: ");
-////            int myAnimal;
-////            int opponentAnimal;
-////            System.out.println("Please choose the animal you want to attack to: ");
-////            opponentAnimal = inputStream.nextInt();
-////            System.out.print("How many animals do you want to choose:");
-////            int numOfAnimals = inputStream.nextInt();
-////            ArrayList<Integer> animalsIndex = new ArrayList<>();
-////            int[] attackTypes = new int[numOfAnimals];
-////            for (int i = 0; i < attackTypes.length; i++) {
-////                attackTypes[i] = 0;
-////            }
-////            for (int i = 0; i < numOfAnimals; i++) {
-////                System.out.println("Please choose your animal " + (i + 1) + ": ");
-////                animalsIndex.add(inputStream.nextInt() - 1);
-////                if (player.animals.get(animalsIndex.get(i)).attackValue[1] != 0) {
-////                    System.out.println("Please choose type of your attack(1/2): ");
-////                    attackTypes[i] = inputStream.nextInt();
-////                    attackTypes[i]--;
-////
-////                }
-////            }
-////            player.groupAttack(opponentAnimal - 1, animalsIndex, attackTypes);
-//
-//
-//            if (!player.attack(myAnimal - 1, opponentAnimal - 1, attackType)) {
-//                System.out.println("Do you want to choose another attack or group attack?(a/g)");
-//                ans = inputStream.next();
-//                if (ans.equals("a")) {
-//                    do {
-//                        System.out.println("Please choose your animal, again: ");
-//                        myAnimal = inputStream.nextInt();
-//                        System.out.println("Please choose the animal you want to attack to, again: ");
-//                        opponentAnimal = inputStream.nextInt();
-//                        if (player.animals.get(myAnimal - 1).attackValue[1] != 0) {
-//                            System.out.println("Please choose type of your attack(1/2): ");
-//                            attackType = inputStream.nextInt();
-//                            attackType--;
-//                        }
-//                    } while (!player.attack(myAnimal - 1, opponentAnimal - 1, attackType));
-//                } else if (ans.equals("g")) {
-//                    System.out.println("Please choose the animal you want to attack to: ");
-//                    opponentAnimal = inputStream.nextInt();
-//                    System.out.print("How many animals do you want to choose:");
-//                    int numOfAnimals = inputStream.nextInt();
-//                    ArrayList<Integer> animalsIndex = new ArrayList<>();
-//                    int[] attackTypes = new int[numOfAnimals];
-//                    for (int i = 0; i < attackTypes.length; i++) {
-//                        attackTypes[i] = 0;
-//                    }
-//                    for (int i = 0; i < numOfAnimals; i++) {
-//                        System.out.println("Please choose your animal " + (i + 1) + ": ");
-//                        animalsIndex.add(inputStream.nextInt() - 1);
-//                        if (player.animals.get(animalsIndex.get(i)).attackValue[1] != 0) {
-//                            System.out.println("Please choose type of your attack(1/2): ");
-//                            attackTypes[i] = inputStream.nextInt();
-//                            attackTypes[i]--;
-//
-//                        }
-//                    }
-//                    player.groupAttack(opponentAnimal - 1, animalsIndex, attackTypes);
-//                }
-//
-//            }
-//        } else if (ans.equals("r")) {
-//            System.out.println("Please choose your animal: ");
-//            int myAnimal = inputStream.nextInt();
-//            while (!playerA.animals.get(myAnimal - 1).recovery()) {
-//                System.out.println("Please choose your animal, again: ");
-//                myAnimal = inputStream.nextInt();
-//            }
-//        }
-
         return ifEndGame();
     }
 

@@ -21,7 +21,7 @@ public class AIPlayer extends Player {
         avgLife /= animals.size();
         for (Animal animal : animals) {
             if (animals2.size() < 3) {
-                if (animal.energy > avgEnergy || animal.life > avgLife) {
+                if (animal.energy > avgEnergy || animal.life > avgLife || animal.attackValue[1] >= 500) {
                     animals2.add(animal);
                 }
             } else {
@@ -45,6 +45,26 @@ public class AIPlayer extends Player {
         int myAnimal = random.nextInt(animals.size());
         int opponentAnimal = random.nextInt(opponent.animals.size());
         int attackType = 0;
+        for (int i = 0; i < animals.size(); i++) {
+            for (int j = 0; j < opponent.animals.size(); j++) {
+                if (animals.get(i).attackValue[0] > opponent.animals.get(j).life &&
+                        animals.get(i).energy - animals.get(i).attackValue[0] >= 0) {
+                    myAnimal = i;
+                    opponentAnimal = j;
+                    attackType = 0;
+                    attack(myAnimal, opponentAnimal, attackType);
+                    return;
+                } else if (animals.get(i).attackValue[1] > opponent.animals.get(j).life &&
+                        animals.get(i).energy - animals.get(i).attackValue[1] >= 0) {
+                    myAnimal = i;
+                    opponentAnimal = j;
+                    attackType = 1;
+                    attack(myAnimal, opponentAnimal, attackType);
+                    return;
+                }
+            }
+        }
+
         if (animals.get(myAnimal).attackValue[1] != 0) {
             attackType = random.nextInt(2);
         }
