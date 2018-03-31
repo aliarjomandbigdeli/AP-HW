@@ -3,7 +3,12 @@ public class Tiger extends Animal {
         super();
         energy = 850;
         life = 850;
+        attackTags[0] = "injure";
+        attackTags[1] = "kill";
+        attackValue = 120;
+        attackValue2 = 650;
     }
+
 
     @Override
     public void recovery() {

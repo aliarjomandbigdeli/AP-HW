@@ -3,6 +3,10 @@ public class Cow extends Animal {
         super();
         energy = 400;
         life = 750;
+        attackTags[0] = "attack";
+        attackTags[1] = "injure";
+        attackValue = 90;
+        attackValue2 = 100;
     }
 
     @Override

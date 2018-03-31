@@ -3,6 +3,8 @@ public class Hipppopotamus extends Animal {
         super();
         energy = 360;
         life = 1000;
+        attackTags[0] = "attack";
+        attackValue = 110;
     }
 
     @Override
@@ -14,4 +16,5 @@ public class Hipppopotamus extends Animal {
             System.out.println("can't recovery any more!");
         }
     }
+
 }

@@ -3,6 +3,10 @@ public class Elephant extends Animal {
         super();
         energy = 500;
         life = 1200;
+        attackTags[0] = "hurt";
+        attackTags[1] = "attack";
+        attackValue = 70;
+        attackValue2 = 50;
     }
 
     @Override

@@ -3,6 +3,8 @@ public class Fox extends Animal {
         super();
         energy = 600;
         life = 400;
+        attackTags[0] = "injure";
+        attackValue = 90;
     }
 
     @Override

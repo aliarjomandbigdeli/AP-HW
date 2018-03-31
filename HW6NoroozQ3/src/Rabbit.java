@@ -3,6 +3,8 @@ public class Rabbit extends Animal {
         super();
         energy = 350;
         life = 200;
+        attackTags[0] = "bite";
+        attackValue = 80;
     }
 
     @Override

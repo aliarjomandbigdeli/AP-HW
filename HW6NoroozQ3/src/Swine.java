@@ -3,6 +3,8 @@ public class Swine extends Animal {
         super();
         energy = 500;
         life = 1100;
+        attackTags[0] = "hurt";
+        attackValue = 80;
     }
 
     @Override

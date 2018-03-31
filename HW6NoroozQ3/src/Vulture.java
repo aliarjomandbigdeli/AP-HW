@@ -3,6 +3,8 @@ public class Vulture extends Animal {
         super();
         energy = 600;
         life = 350;
+        attackTags[0] = "injure";
+        attackValue = 100;
     }
 
     @Override

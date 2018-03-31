@@ -3,6 +3,8 @@ public class Wolf extends Animal {
         super();
         energy = 700;
         life = 450;
+        attackTags[0] = "kill";
+        attackValue = 700;
     }
 
     @Override

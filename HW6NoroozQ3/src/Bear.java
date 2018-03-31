@@ -3,6 +3,10 @@ public class Bear extends Animal {
         super();
         energy = 900;
         life = 850;
+        attackTags[0] = "injure";
+        attackTags[1] = "kill";
+        attackValue = 130;
+        attackValue2 = 600;
     }
 
     @Override
@@ -14,4 +18,5 @@ public class Bear extends Animal {
             System.out.println("can't recovery any more!");
         }
     }
+
 }

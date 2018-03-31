@@ -3,6 +3,8 @@ public class Turtle extends Animal {
         super();
         energy = 230;
         life = 350;
+        attackTags[0] = "bite";
+        attackValue = 200;
     }
 
     @Override
