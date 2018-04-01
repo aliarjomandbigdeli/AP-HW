@@ -3,23 +3,50 @@ import java.util.Scanner;
 
 public class HumanPlayer extends Player {
 
+    /**
+     * constructor
+     */
     public HumanPlayer() {
         super();
     }
 
+    /**
+     * by this method you can choose 10 cards from distributed cards
+     */
     @Override
     public void chooseCards() {
+        int N = 3;
         System.out.println("Please choose 10 cards");
         Scanner inputStream = new Scanner(System.in);
         ArrayList<Animal> animals2 = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        int[] choice = new int[N];
+        boolean flag = false;
+        for (int i = 0; i < N; i++) {
+            flag = false;
             System.out.println("Enter the  choice" + (i + 1) + ": ");
-            int choice = inputStream.nextInt();
-            animals2.add(animals.get(choice - 1));
+            choice[i] = inputStream.nextInt();
+            for (int j = 0; j < i; j++) {
+                if (choice[i] == choice[j]) {
+                    i--;
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag)
+                continue;
+            if (choice[i] <= 0 || choice[i] > 30) {
+                i--;
+                continue;
+            }
+
+            animals2.add(animals.get(choice[i] - 1));
         }
         animals = animals2;
     }
 
+    /**
+     * this method handle turn process of the game
+     */
     public void turn() {
         Scanner inputStream = new Scanner(System.in);
         System.out.println(getId() + "'s turn");
@@ -32,24 +59,41 @@ public class HumanPlayer extends Player {
         if (ans.equals("a")) {
             System.out.println("Please choose your animal: ");
             int myAnimal = inputStream.nextInt();
-            System.out.println("Please choose the animal you want to attack to: ");
-            int opponentAnimal = inputStream.nextInt();
+            while (myAnimal > animals.size()) {
+                System.out.println("Please choose your animal, again: ");
+                myAnimal = inputStream.nextInt();
+            }
             int attackType = 0;
+            int opponentAnimal;
             if (animals.get(myAnimal - 1).attackValue[1] != 0) {
                 System.out.println("Please choose type of your attack(1/2): ");
                 attackType = inputStream.nextInt();
                 attackType--;
             }
-
-
-            if (!attack(myAnimal - 1, opponentAnimal - 1, attackType)) {
+            if (canAttack(myAnimal - 1, attackType)) {
+                System.out.println("Please choose the animal you want to attack to: ");
+                opponentAnimal = inputStream.nextInt();
+                while (opponentAnimal > opponent.animals.size()) {
+                    System.out.println("Please choose the animal you want to attack to, again: ");
+                    opponentAnimal = inputStream.nextInt();
+                }
+                attack(myAnimal - 1, opponentAnimal - 1, attackType);
+            } else {
                 System.out.println("Do you want to choose another attack or group attack?(a/g)");
                 ans = inputStream.next();
                 if (ans.equals("a")) {
                     System.out.println("Please choose your animal: ");
                     myAnimal = inputStream.nextInt();
+                    while (myAnimal > animals.size()) {
+                        System.out.println("Please choose your animal, again: ");
+                        myAnimal = inputStream.nextInt();
+                    }
                     System.out.println("Please choose the animal you want to attack to: ");
                     opponentAnimal = inputStream.nextInt();
+                    while (opponentAnimal > opponent.animals.size()) {
+                        System.out.println("Please choose the animal you want to attack to, again: ");
+                        opponentAnimal = inputStream.nextInt();
+                    }
                     attackType = 0;
                     if (animals.get(myAnimal - 1).attackValue[1] != 0) {
                         System.out.println("Please choose type of your attack(1/2): ");
@@ -59,8 +103,16 @@ public class HumanPlayer extends Player {
                     while (!attack(myAnimal - 1, opponentAnimal - 1, attackType)) {
                         System.out.println("Please choose your animal, again: ");
                         myAnimal = inputStream.nextInt();
+                        while (myAnimal > animals.size()) {
+                            System.out.println("Please choose your animal, again: ");
+                            myAnimal = inputStream.nextInt();
+                        }
                         System.out.println("Please choose the animal you want to attack to, again: ");
                         opponentAnimal = inputStream.nextInt();
+                        while (opponentAnimal > opponent.animals.size()) {
+                            System.out.println("Please choose the animal you want to attack to, again: ");
+                            opponentAnimal = inputStream.nextInt();
+                        }
                         attackType = 0;
                         if (animals.get(myAnimal - 1).attackValue[1] != 0) {
                             System.out.println("Please choose type of your attack(1/2): ");
@@ -69,28 +121,32 @@ public class HumanPlayer extends Player {
                         }
                     }
                 } else if (ans.equals("g")) {
-                    System.out.println("Please choose the animal you want to attack to: ");
-                    opponentAnimal = inputStream.nextInt();
-                    System.out.print("How many animals do you want to choose:");
-                    int numOfAnimals = inputStream.nextInt();
-                    ArrayList<Integer> animalsIndex = new ArrayList<>();
-                    int[] attackTypes = new int[numOfAnimals];
-                    for (int i = 0; i < attackTypes.length; i++) {
-                        attackTypes[i] = 0;
-                    }
-                    for (int i = 0; i < numOfAnimals; i++) {
-                        System.out.println("Please choose your animal " + (i + 1) + ": ");
-                        animalsIndex.add(inputStream.nextInt() - 1);
-                        if (animals.get(animalsIndex.get(i)).attackValue[1] != 0) {
-                            System.out.println("Please choose type of your attack(1/2): ");
-                            attackTypes[i] = inputStream.nextInt();
-                            attackTypes[i]--;
-
+                    ArrayList<Integer> animalsIndex;
+                    int[] attackTypes;
+                    do {
+                        System.out.println("Please choose the animal you want to attack to: ");
+                        opponentAnimal = inputStream.nextInt();
+                        System.out.print("How many animals do you want to choose:");
+                        int numOfAnimals = inputStream.nextInt();
+                        animalsIndex = new ArrayList<>();
+                        attackTypes = new int[numOfAnimals];
+                        for (int i = 0; i < attackTypes.length; i++) {
+                            attackTypes[i] = 0;
                         }
-                    }
-                    groupAttack(opponentAnimal - 1, animalsIndex, attackTypes);
-                }
+                        for (int i = 0; i < numOfAnimals; i++) {
+                            System.out.println("Please choose your animal " + (i + 1) + ": ");
+                            animalsIndex.add(inputStream.nextInt() - 1);
+                            if (animals.get(animalsIndex.get(i)).attackValue[1] != 0) {
+                                System.out.println("Please choose type of your attack(1/2): ");
+                                attackTypes[i] = inputStream.nextInt();
+                                attackTypes[i]--;
 
+                            }
+                        }
+                    } while (!groupAttack(opponentAnimal - 1, animalsIndex, attackTypes));
+                    //groupAttack(opponentAnimal - 1, animalsIndex, attackTypes);
+
+                }
             }
         } else if (ans.equals("r")) {
             System.out.println("Please choose your animal: ");

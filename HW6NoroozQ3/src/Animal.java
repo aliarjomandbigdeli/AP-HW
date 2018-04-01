@@ -1,4 +1,10 @@
 
+/**
+ * this class models Animal card game animals
+ *
+ * @author Ali ArjomandBigdeli
+ * @since 4.1.2018
+ */
 public abstract class Animal {
     protected int energy;
     protected int maxEnergy;
@@ -9,6 +15,9 @@ public abstract class Animal {
     protected int[] attackValue;
 
 
+    /**
+     * constructor
+     */
     public Animal() {
         alive = true;
         numOfRecovery = 0;
@@ -20,10 +29,18 @@ public abstract class Animal {
         attackValue[1] = 0;
     }
 
+    /**
+     * this method return the live status of an animal
+     * @return a boolean that specifies the live status of an animal
+     */
     public boolean isAlive() {
         return alive;
     }
 
+    /**
+     * by this method you can refill the energy of an animal
+     * @return a boolean that specifies the process is possible or not
+     */
     public boolean recovery() {
         if (numOfRecovery < 3) {
             energy = maxEnergy;
@@ -35,6 +52,12 @@ public abstract class Animal {
         }
     }
 
+    /**
+     * this method use for attacking one animal to another
+     * @param animal the animal you want to attack to
+     * @param attackType specifies the attack type
+     * @return a boolean that specifies the process is possible or not
+     */
     public boolean attack(Animal animal, int attackType) {
         if (energy - attackValue[attackType] >= 0) {
             animal.life -= attackValue[attackType];
@@ -49,7 +72,19 @@ public abstract class Animal {
         }
     }
 
+    /**
+     *
+     * @param attackType specifies the attack type
+     * @return a boolean that specifies the process is possible or not
+     */
+    public boolean canAttack(int attackType) {
+        return energy - attackValue[attackType] >= 0;
+    }
 
+    /**
+     * toString
+     * @return toString
+     */
     @Override
     public String toString() {
         if (alive) {

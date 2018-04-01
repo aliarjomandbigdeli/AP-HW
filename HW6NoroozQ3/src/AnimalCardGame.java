@@ -1,5 +1,11 @@
 import java.util.Scanner;
 
+/**
+ * this class models Animal card game
+ *
+ * @author Ali ArjomandBigdeli
+ * @since 4.1.2018
+ */
 public class AnimalCardGame {
     private Player playerA;
     private Player playerB;
@@ -12,6 +18,9 @@ public class AnimalCardGame {
     }
 
 
+    /**
+     * this method is for running the game
+     */
     public void startGame() {
         Scanner inputStream = new Scanner(System.in);
         System.out.println("Single player?(y/n)");

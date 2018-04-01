@@ -3,11 +3,17 @@ import java.util.Random;
 
 public class AIPlayer extends Player {
 
+    /**
+     * constructor
+     */
     public AIPlayer() {
         super();
         setId("Computer");
     }
 
+    /**
+     * by this method you can choose 10 cards from distributed cards
+     */
     @Override
     public void chooseCards() {
         ArrayList<Animal> animals2 = new ArrayList<>();
@@ -31,6 +37,9 @@ public class AIPlayer extends Player {
         animals = animals2;
     }
 
+    /**
+     * this method handle turn process of the game
+     */
     public void turn() {
         System.out.println(getId() + "'s turn");
         Random random = new Random();

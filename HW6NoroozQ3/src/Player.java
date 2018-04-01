@@ -1,12 +1,21 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * this class models Animal card game player
+ *
+ * @author Ali ArjomandBigdeli
+ * @since 4.1.2018
+ */
 public abstract class Player {
     protected ArrayList<Animal> animals;
     protected Player opponent;
     protected String id;
 
 
+    /**
+     * constructor
+     */
     public Player() {
         animals = new ArrayList<>();
         id = " ";
@@ -39,6 +48,9 @@ public abstract class Player {
         return id;
     }
 
+    /**
+     * this method distribute 30 cards(animals) to a player in a random ways
+     */
     public void distributeCards() {
         int[] numberOfAnimals = new int[12];
         for (int i = 0; i < numberOfAnimals.length; i++) {
@@ -139,6 +151,9 @@ public abstract class Player {
 
     }
 
+    /**
+     * you can see your cards with this method
+     */
     public void showCards() {
         for (int i = 0; i < animals.size(); i++) {
             System.out.println((i + 1) + ": " + animals.get(i));
@@ -146,6 +161,9 @@ public abstract class Player {
         }
     }
 
+    /**
+     * this method shows your cards and your opponent cards
+     */
     public void showAllCards() {
 
         int max = animals.size() > opponent.animals.size() ? animals.size() : opponent.animals.size();
@@ -192,10 +210,23 @@ public abstract class Player {
         }
     }
 
+    /**
+     * by this method you can choose 10 cards from distributed cards
+     */
     public abstract void chooseCards();
 
+    /**
+     * this method handle turn process of the game
+     */
     public abstract void turn();
 
+    /**
+     * this method use for attacking one animal to another
+     * @param myAnimal the animal wants attack
+     * @param opponentAnimal be attacked animal
+     * @param attackType specifies the attack type
+     * @return a boolean that check whether the animal can attack or not(has enough energy or not)
+     */
     public boolean attack(int myAnimal, int opponentAnimal, int attackType) {
         if (animals.get(myAnimal).attack(opponent.animals.get(opponentAnimal), attackType)) {
             if (!opponent.animals.get(opponentAnimal).isAlive()) {
@@ -206,7 +237,24 @@ public abstract class Player {
             return false;
     }
 
+    /**
+     * this method check whether the animal can attack or not(has enough energy or not)
+     * @param myAnimal one of Animal type
+     * @param attackType specifies the attack type
+     * @return a boolean that check whether the animal can attack or not(has enough energy or not)
+     */
+    public boolean canAttack(int myAnimal, int attackType) {
+        return animals.get(myAnimal).canAttack(attackType);
+    }
 
+
+    /**
+     * this method use for attacking group of animals to another
+     * @param opponentAnimal be attacked animal
+     * @param animalsIndex specifies index of animals that want to attack
+     * @param attackTypes specifies the attack type
+     * @return a boolean that check whether the animal can attack or not
+     */
     public boolean groupAttack(int opponentAnimal, ArrayList<Integer> animalsIndex, int[] attackTypes) {
         int sumOfAttack = 0;
         ArrayList<Animal> animalArrayList = new ArrayList<>();
@@ -215,7 +263,7 @@ public abstract class Player {
         }
         for (int i = 0; i < animalArrayList.size(); i++) {
             for (int j = 0; j < i; j++) {
-                if (!animalArrayList.get(i).attackTags[0].equals(animalArrayList.get(j).attackTags[0])) {
+                if (!animalArrayList.get(i).attackTags[attackTypes[i]].equals(animalArrayList.get(j).attackTags[attackTypes[j]])) {
                     System.err.println("Can't group attack(tags)");
                     return false;
                 }
@@ -241,6 +289,10 @@ public abstract class Player {
         return true;
     }
 
+    /**
+     * the method specifies whether the player is a winner or not
+     * @return boolean that specifies whether the player is a winner or not
+     */
     public boolean isWinner() {
         if (opponent.animals.size() == 0)
             return true;
