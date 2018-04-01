@@ -10,7 +10,7 @@ import java.util.Random;
 public abstract class Player {
     protected ArrayList<Animal> animals;
     protected Player opponent;
-    protected String id;
+    private String id;
 
 
     /**
@@ -294,10 +294,7 @@ public abstract class Player {
      * @return boolean that specifies whether the player is a winner or not
      */
     public boolean isWinner() {
-        if (opponent.animals.size() == 0)
-            return true;
-        else
-            return false;
+        return opponent.animals.size() == 0;
     }
 
 }
