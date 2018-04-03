@@ -26,7 +26,7 @@ public class AIPlayer extends Player {
         avgEnergy /= animals.size();
         avgLife /= animals.size();
         for (Animal animal : animals) {
-            if (animals2.size() < 3) {
+            if (animals2.size() < 10) {
                 if (animal.energy > avgEnergy || animal.life > avgLife || animal.attackValue[1] >= 500) {
                     animals2.add(animal);
                 }

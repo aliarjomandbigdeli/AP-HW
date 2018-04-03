@@ -15,7 +15,7 @@ public class HumanPlayer extends Player {
      */
     @Override
     public void chooseCards() {
-        int N = 3;
+        int N = 10;
         System.out.println("Please choose 10 cards");
         Scanner inputStream = new Scanner(System.in);
         ArrayList<Animal> animals2 = new ArrayList<>();
@@ -144,7 +144,6 @@ public class HumanPlayer extends Player {
                             }
                         }
                     } while (!groupAttack(opponentAnimal - 1, animalsIndex, attackTypes));
-                    //groupAttack(opponentAnimal - 1, animalsIndex, attackTypes);
 
                 }
             }
